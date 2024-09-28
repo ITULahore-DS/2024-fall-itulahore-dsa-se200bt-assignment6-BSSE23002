@@ -130,6 +130,15 @@ void Queue::dequeue() {
     }
 }
 
+int Queue::peek() {
+    if(isEmpty()){
+        return -1;
+    }
+    else{
+        return front->getData();
+    }
+}
+
 
 int Queue::size() {
     return count;     // count will be the size of queue
@@ -248,5 +257,4 @@ void menu() {
         }
     } while (choice != 8);
 }
-
 

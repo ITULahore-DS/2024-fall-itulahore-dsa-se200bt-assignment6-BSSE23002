@@ -68,6 +68,8 @@ public:
 
     void printQueue();
 
+    int peek ();
+
     ~Queue();
 };
 
