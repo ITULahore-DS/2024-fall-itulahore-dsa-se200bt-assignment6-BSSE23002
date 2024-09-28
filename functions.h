@@ -70,6 +70,8 @@ public:
 
     int peek ();
 
+    void clear();
+
     ~Queue();
 };
 

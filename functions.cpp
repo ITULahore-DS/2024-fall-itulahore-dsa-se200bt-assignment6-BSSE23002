@@ -152,10 +152,14 @@ void Queue::printQueue() {
     }
 }
 
-Queue::~Queue() {
-    while (!isEmpty()) {
-        dequeue();   // clear memory by using dequeue function
+void Queue::clear() {
+    while (!isEmpty()){
+        dequeue();
     }
+}
+
+Queue::~Queue() {
+    clear();    // clear memory by using dequeue function
 }
 
 void menu() {
@@ -257,4 +261,3 @@ void menu() {
         }
     } while (choice != 8);
 }
-
