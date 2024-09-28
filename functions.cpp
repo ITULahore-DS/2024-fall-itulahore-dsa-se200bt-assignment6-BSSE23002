@@ -4,144 +4,150 @@
 
 #include "functions.h"
 
-Node::Node(int data) {
+Node::Node(int data) {  // node constructor to initialise data/value
     this->data = data;
     next = nullptr;
 }
 
-void Node::setNext(Node *nextNode) {
+void Node::setNext(Node *nextNode) {   // set next pointer
     this->next = nextNode;
 }
 
-Node *Node::getNext() {
+Node *Node::getNext() {       // get the pointer
     return next;
 }
 
 void Node::setData(int value) {
-    this->data = value;
+    this->data = value;       //  set data in node
 }
 
-int Node::getData() {
+int Node::getData() {          // get data from node
     return data;
 }
 
-Stack::Stack() {
+Stack::Stack() {        //initialize Queue attributes
     this->top = nullptr;
     count = 0;
 }
 
-bool Stack::isEmpty() {
+bool Stack::isEmpty() {           // function to check empty stack
     if (top == nullptr) {
-        return true;
+        return true;              // return true if empty
     } else {
-        return false;
+        return false;             // return false if not empty
     }
 }
 
 void Stack::push(int data) {
-    Node *newNode = new Node(data);
-    newNode->next = top;
-    top = newNode;
+    Node *newNode = new Node(data);    // make a new node
+
+    newNode->setNext(top);      // point newNode to top
+    top = newNode;              //set newNode as top
     count++;
 }
 
 int Stack::peek() {
     if (isEmpty()) {
-        return -1;
+        return -1;           // if empty stack return -1
+    } else {
+        return top->getData();   // get the data from top
     }
-    return top->getData();
 }
 
 void Stack::pop() {
     if (isEmpty()) {
         return;
     } else {
-        top = top->next;
+        Node *newNode = top;      // store top in temporary pointer
+        top = top->getNext();     // point top to the next node
+        delete newNode;           // now delete the old top
         count--;
     }
 }
 
 int Stack::size() {
-    return count;
+    return count;    // count will be the size of stack
 }
 
 void Stack::clear() {
     while (top != nullptr) {
-        top = top->next;
-        count--;
+        pop();      // clearing by using pop function
     }
 }
 
 void Stack::printStack() {
-    while (!isEmpty()) {
-        cout << top->getData() << "\t";
-        top = top->next;
+    Node *temp = top;         // store top in temporary pointer
+    while (temp != nullptr) {
+        cout << temp->getData() << "\t";     //traverse through  whole list
+        temp = temp->getNext();          // sath sath update the pointer
         count--;
     }
 }
 
 Stack::~Stack() {
-    while (!isEmpty()) {
-        Node *temp = top;
-        top = top->next;
-        delete temp;
-    }
+    clear();       // clear up alll memory by using clear function
+}
+
+Queue::Queue() {           //initialize Queue attributes
+    front = nullptr;
+    rear = nullptr;
     count = 0;
 }
 
-Queue::Queue() {
-    top = nullptr;
-    count = 0;
-}
-
-bool Queue::isEmpty() {
-    if (top == nullptr) {
-        return true;
+bool Queue::isEmpty() {      // function to check empty stack
+    if (front == nullptr) {
+        return true;         // return true if empty
     } else {
-        return false;
+        return false;     // return false if not empty
     }
 }
 
 void Queue::enqueue(int data) {
     Node *newNode = new Node(data);
 
-    if (top == nullptr) {
-        top = newNode;
+    if (front == nullptr) {    // if front is null that mean whole que is empty
+        front = rear = newNode;    // so add new node and now front and rear will point the same node
     } else {
-        Node *temp = top;
-        while (temp->next != nullptr) {
-            temp = temp->next;
-        }
-        temp->next = newNode;
+
+        rear->setNext(newNode);  // otherwise rear will point newNode
+        rear = newNode;    // update the rear to new node
     }
     count++;
 }
 
 void Queue::dequeue() {
     if (isEmpty()) {
-        return;
+        return;         // is queue is already empty simply return
     } else {
-        int currData = top->getData();
-        Node *currTop = top;
-        top = top->next;
-        delete currTop;
+        Node *currTop = front;       // store your front in temporary pointer
+        front = front->getNext();     // update your front
+
+        if (front == nullptr) {
+            rear = nullptr;       // if front is null then back also be null
+        }
+        delete currTop;    //  delete the old front
         count--;
     }
 }
 
 
 int Queue::size() {
-    return count;
+    return count;     // count will be the size of queue
 }
 
 void Queue::printQueue() {
-    Node *temp = top;
+    Node *temp = front;    //store iin a temporary pointer
     while (temp != nullptr) {
-        cout << temp->getData() << "\t";
-        temp = temp->next;
+        cout << temp->getData() << "\t";    //traverse through whole queue and print
+        temp = temp->getNext();    // sath sath update the temp pointer
     }
 }
 
+Queue::~Queue() {
+    while (!isEmpty()) {
+        dequeue();   // clear memory by using dequeue function
+    }
+}
 
 void menu() {
     Stack myStack;
@@ -174,9 +180,6 @@ void menu() {
                 break;
             }
             case 2: {
-                myStack.push(10);
-                myStack.push(20);
-                myStack.push(30);
 
                 myStack.pop();
                 cout << "Stack after  pop\n";
@@ -186,9 +189,6 @@ void menu() {
                 break;
             }
             case 3: {
-                myStack.push(10);
-                myStack.push(20);
-                myStack.push(30);
 
                 cout << "Peek is: " << myStack.peek() << endl;
                 myStack.pop();
@@ -197,6 +197,7 @@ void menu() {
                 cout << "Peek after 2nd pop: " << myStack.peek() << endl;
                 myStack.pop();
                 cout << "Peek after 3rd pop: " << myStack.peek() << endl;
+                myStack.pop();
 
                 cout << "\n";
                 break;
@@ -223,24 +224,15 @@ void menu() {
             }
             case 6: {
 
-
                 myQueue.dequeue();
                 myQueue.printQueue();
-
-                myQueue.dequeue();
-                myQueue.dequeue();
 
                 cout << "\n";
                 break;
             }
             case 7: {
-                myQueue.enqueue(10);
-                myQueue.enqueue(20);
-                myQueue.enqueue(30);
-                myQueue.enqueue(40);
-                myQueue.enqueue(50);
-                myQueue.printQueue();
 
+                myQueue.printQueue();
                 cout << "\n";
                 break;
             }
@@ -256,3 +248,5 @@ void menu() {
         }
     } while (choice != 8);
 }
+
+

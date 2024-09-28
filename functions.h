@@ -10,9 +10,9 @@
 using namespace std;
 
 class Node {
-public:
     int data;
     Node *next;
+public:
 
     Node(int data);
 
@@ -49,9 +49,11 @@ public:
     void printStack();
 };
 
-class Queue{
+class Queue {
 public:
-    Node* top;
+//    Node *top;
+    Node* front;
+    Node* rear;
     int count;
 
     Queue();
@@ -65,6 +67,8 @@ public:
     void dequeue();
 
     void printQueue();
+
+    ~Queue();
 };
 
 void menu();
