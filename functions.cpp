@@ -155,9 +155,8 @@ void menu() {
         cout << "4. printStack\n";
         cout << "5. enqueue\n";
         cout << "6. dequeue\n";
-        cout << "7. printStack\n";
-        cout << "8. printQueue\n";
-        cout << "9. Exit\n";
+        cout << "7. printQueue\n";
+        cout << "8. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
         cout << endl;
@@ -228,6 +227,9 @@ void menu() {
                 myQueue.dequeue();
                 myQueue.printQueue();
 
+                myQueue.dequeue();
+                myQueue.dequeue();
+
                 cout << "\n";
                 break;
             }
@@ -243,13 +245,8 @@ void menu() {
                 break;
             }
             case 8: {
-
-
-                cout << "\n";
-                break;
-            }
-            case 9: {
                 cout << "Exiting the program." << endl;
+                cout << "\n";
                 break;
             }
             default: {
@@ -257,6 +254,5 @@ void menu() {
                 break;
             }
         }
-    } while (choice != 9);
-
+    } while (choice != 8);
 }
